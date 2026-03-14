@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Writing Risk Review</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f1e8;
+        --card: #fffaf2;
+        --text: #1f2933;
+        --accent: #b45309;
+        --border: #e5d3b3;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        background: linear-gradient(135deg, #f6f1e8, #efe2c6);
+        color: var(--text);
+      }
+
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 48px 20px 72px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 16px 40px rgba(84, 54, 20, 0.08);
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 220px;
+        box-sizing: border-box;
+        padding: 14px;
+        font: inherit;
+        border-radius: 12px;
+        border: 1px solid #d1b98b;
+        resize: vertical;
+        background: #fff;
+      }
+
+      button {
+        margin-top: 16px;
+        padding: 12px 18px;
+        border: none;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .result {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(180, 83, 9, 0.12);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="card">
+        <h1>AI Writing Risk Review</h1>
+        <p>Paste a marketing or persuasive draft to get a lightweight risk score and explanation.</p>
+
+        <form method="post" action="/review">
+          <label for="text">Draft text</label>
+          <textarea id="text" name="text" placeholder="Enter text to review...">{{ text }}</textarea>
+          <button type="submit">Review Text</button>
+        </form>
+
+        {% if result %}
+        <section class="result">
+          <p><strong>Review ID:</strong> {{ review_id }}</p>
+          <p><strong>Risk score:</strong> {{ result.score }}/100</p>
+          <p><strong>Risk level:</strong> <span class="pill">{{ result.level|upper }}</span></p>
+          <ul>
+            {% for finding in result.findings %}
+            <li>{{ finding.category }}: {{ finding.matches|join(", ") }} ({{ finding.weight }} points)</li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+      </div>
+    </main>
+  </body>
+  </html>

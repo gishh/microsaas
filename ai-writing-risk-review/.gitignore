@@ -1,0 +1,15 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+.deps/
+vendor/
+pytest-cache-files-*/
+uvicorn-stdout.log
+uvicorn-stderr.log
+uvicorn-startup.log
+risk_reviews.db
