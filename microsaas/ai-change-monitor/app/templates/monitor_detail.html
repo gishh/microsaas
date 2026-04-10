@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ monitor.name }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <div>
+    <h1>{{ monitor.name }}</h1>
+    <p><a href="{{ monitor.url }}" target="_blank" rel="noreferrer">{{ monitor.url }}</a></p>
+  </div>
+  <form method="post" action="/monitors/{{ monitor.id }}/check">
+    <button class="button" type="submit">Check now</button>
+  </form>
+</section>
+
+<section class="grid">
+  <article class="card">
+    <h2>Status</h2>
+    <p>Created: {{ monitor.created_at }}</p>
+    <p>Last checked: {{ monitor.last_checked_at or "Never" }}</p>
+    <p>Snapshots stored: {{ monitor.snapshots|length }}</p>
+    <p>Total changes: {{ changes|length }}</p>
+  </article>
+
+  <article class="card">
+    <h2>Latest text snapshot</h2>
+    {% if latest_snapshot %}
+    <pre class="preview">{{ latest_snapshot.normalized_text[:1200] }}</pre>
+    {% else %}
+    <p>No snapshot yet. Use "Check now" to fetch the page.</p>
+    {% endif %}
+  </article>
+</section>
+
+<section class="card">
+  <h2>Detected changes</h2>
+  {% if changes %}
+  <ul class="change-list">
+    {% for change in changes %}
+    <li>
+      <a href="/changes/{{ change.id }}">{{ change.summary }}</a>
+      <span>{{ change.created_at }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No changes recorded yet.</p>
+  {% endif %}
+</section>
+{% endblock %}
+

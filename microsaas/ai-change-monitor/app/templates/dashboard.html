@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <div>
+    <h1>Dashboard</h1>
+    <p>Monitor public pages and manually check for text changes.</p>
+  </div>
+  <a class="button" href="/monitors/new">Create monitor</a>
+</section>
+
+{% if monitors %}
+<div class="card-list">
+  {% for monitor in monitors %}
+  <article class="card">
+    <h2><a href="/monitors/{{ monitor.id }}">{{ monitor.name }}</a></h2>
+    <p><a href="{{ monitor.url }}" target="_blank" rel="noreferrer">{{ monitor.url }}</a></p>
+    <dl class="meta">
+      <div>
+        <dt>Snapshots</dt>
+        <dd>{{ monitor.snapshots|length }}</dd>
+      </div>
+      <div>
+        <dt>Changes</dt>
+        <dd>{{ monitor.changes|length }}</dd>
+      </div>
+      <div>
+        <dt>Last checked</dt>
+        <dd>{{ monitor.last_checked_at or "Never" }}</dd>
+      </div>
+    </dl>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<section class="empty-state">
+  <h2>No monitors yet</h2>
+  <p>Create your first monitor to start checking a page manually.</p>
+</section>
+{% endif %}
+{% endblock %}
+

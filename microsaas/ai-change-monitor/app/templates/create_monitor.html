@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Create Monitor{% endblock %}
+
+{% block content %}
+<section class="form-shell">
+  <h1>Create Monitor</h1>
+  <p>Add a public page URL and give it a friendly name.</p>
+
+  {% if error %}
+  <div class="alert">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/monitors" class="form-card">
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" value="{{ form.get('name', '') }}" required>
+
+    <label for="url">Public URL</label>
+    <input id="url" name="url" type="url" value="{{ form.get('url', '') }}" placeholder="https://example.com/page" required>
+
+    <button class="button" type="submit">Create monitor</button>
+  </form>
+</section>
+{% endblock %}
+

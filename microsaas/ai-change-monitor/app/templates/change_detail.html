@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Change {{ change.id }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <div>
+    <h1>Change Detail</h1>
+    <p><a href="/monitors/{{ change.monitor.id }}">Back to {{ change.monitor.name }}</a></p>
+  </div>
+</section>
+
+<article class="card">
+  <p><strong>Summary:</strong> {{ change.summary }}</p>
+  <p><strong>Recorded at:</strong> {{ change.created_at }}</p>
+  <p><strong>Previous snapshot:</strong> {{ change.previous_snapshot_id }}</p>
+  <p><strong>Current snapshot:</strong> {{ change.current_snapshot_id }}</p>
+</article>
+
+<article class="card">
+  <h2>Readable diff</h2>
+  <pre class="diff">{{ change.diff_text }}</pre>
+</article>
+{% endblock %}
+
